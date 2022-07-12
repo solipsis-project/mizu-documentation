@@ -42,7 +42,7 @@ The most common reserved field is `$signatures`, which contains one of more key-
 
 For the full list of reserved fields and their meanings, see [Reserved Fields](./reserved_fields)
 
-## Streams and Updates
+## Streams
 
 If all we're doing is publishing structured data to a distributed hash table, we don't need Mizu. We can already do all that and more with just IPFS.
 

@@ -1,4 +1,4 @@
-# RSS meets Git meets P2P file sharing built on top of [IPFS](https://ipfs.io), [libP2P](https://libp2p.io), and [json-rql](https://json-rql.org/)
+# Mizu: RSS meets Git meets P2P file sharing built on top of [IPFS](https://ipfs.io), [libP2P](https://libp2p.io), and [json-rql](https://json-rql.org/)
 
 Mizu is a decentralized datastore with pubsub features, allowing subscription to content feeds that still function even if the source of the content goes down. Mizu is even expressive enough to allow for the creation of decentralized apps for creating and interacting with content published on the Mizu network.
 
@@ -7,6 +7,8 @@ The core unit of data in Mizu is a Message, which is a row of a triplestore data
 Mizu is different from other distributed databases: instead of proactively trying to replicate the entire database on each node, only data that is specifically requested by other users is replicated. This makes Mizu more like IPFS but for mutable data: only the data you actually need is on your node.
 
 For a more in-depth look at what can be done with Mizu, check out [Concepts](./concepts) and [Tutorial](./tutorial).
+
+To understand the similarities and differences between Mizu and other similar technologies, check out [Comparisons](./comparisons)
 
 # Use Cases
 
