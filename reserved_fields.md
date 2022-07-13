@@ -1,10 +1,12 @@
 # Reserved Fields
 
+Some message fields start with a $. These are reserved fields, and each one has special semantics, either purely for message validation, or for one or more Mizu actions. Reserved fields are validated when a message is published or when received by a node: thus, all published messages can be assumed to obey certain constraints specified in this document. Names starting with a $ that are not listed here are reserved for later use and cannot be used in messages: clients must reject messages containing any such fields.
+
 The current list of reserved fields includes:
 
 ### $signatures
 
-Used for signing messages. The value of `$signatures` must be a list of objects with exactly two fields: `key` containing the public key used (as a Multicodec, meaning the algorithm and its parameters are part of the key), and `digest` containing the actual signature.
+Used for signing messages. The value of `$signatures` must be a list of objects with exactly two fields: `key` containing a multihash of the public key, and `digest` containing the actual signature.
 
 During publishing, the contents of the object, minus the `$signatues` field, are serialized as dag-cbor, and then verified against each provided signature. If the verification of any provided signature fails, the message is not published.
 
