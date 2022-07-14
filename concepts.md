@@ -4,13 +4,17 @@
 
 A Mizu URI is made up of a path, the fragment, and the parameters. The format of a mizu URI is:
 
-https://mizu.stream/{action]/{path}[#{fragment}][?{parameters}]
+https://mizu.stream/{action]/{cid}/{path}[#{fragment}][?{parameters}]
 
 Note that just because a Mizu URI begins with "https://mizu.stream/" doesn't mean that a DNS lookup for mizu.stream will necessarily occur, or that the https protocol will be used to resolve the URI. It's merely an identifier that allows Mizu URIs to be easily identified, chosen to coincide with the Mizu reference gateway at https://mizu.stream (which *does* use DNS and HTTPS to resolve requests).
 
+### Cid
+
+Every message published to Mizu is assigned a CID, which is a [multihash](https://multiformats.io/multihash/) of the message content. This portion of the Mizu URI identifies a message.
+
 ### Path
 
-The path portion of a Mizu URI is used to identify a message in Mizu. It is a [multihash](https://multiformats.io/multihash/) of the message content.
+The path portion of a Mizu URI is used to identify the component of the message that is the target of the action. A large message might contain multiple queries, streams, or templates. 
 
 ### Action
 

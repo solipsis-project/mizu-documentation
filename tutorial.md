@@ -112,4 +112,84 @@ We call a message that contains both queries and markup language for rendering t
 
 Streams are described in more detail in the [Streams Tutorial](./streams_tutorial).
 
+## Step 4: Creating your own key, and auto-signing
+
+We'd much rather have the Mizu command line interface create keys and digests for us than have to manually insert them into our messages. In this step, we're going to generate a key and configure the client to sign our messages with it. This will make the examples much simpler.
+
+For more information, check out [Client Configuration](./client_configuration)
+
+TODO: Describe how to configure the client to auto-sign messages.
+
+## Step 5: Using $ref
+
+In the previous example, we had a stream whose associated query matched against all messages signed by a specific key. This is fine for streams that have a single author, but doesn't work for multi-author streams and isn't very readible. When possible, we'd much rather have messages that declare what stream they belong to. (We say "when possible" bacause some streams, like reblogs, may contain content that wasn't originally made for that stream.)
+
+So we're going to create a stream definition that requires that, in addition to the messages being signed, messages must reference the original stream definition. We can accomplish this by using the ["$ref" reserved field](./reserved_fields#signatures).
+
+```
+> $Stream = echo '{
+	"title": "Aspiring Mizu Stream",
+	"query": {
+		"@select": "?posts",
+  		"@where": {
+  			"stream": { "$ref": "#" },
+			"posts": "?posts",
+  			"$$signatures": {
+  				"key": `mizu config get key`
+  			}
+  		}
+	},
+	"stylesheet": "...",
+	"html": "..."
+}' | mizu publish
+bafy...
+```
+
+We no longer include the full cid in the example because its value will depend on the key that was used to sign the message. However, we assign the result to a variable so that we can reference it in later commands.
+
+When an object in the Mizu data model has only a single field named `$ref`, that object is a reference to another Mizu URI. A Mizu reference can be full (contain a path) or patial (only contain a fragment). Here we use the partial reference `#`, which means "the root of the current message." Note that we can't use an absolute reference here: an absolute reference would require knowing this message's path, but the message's path is a hash of its content! We won't know what it is until after we publish the message.
+
+Here's a message that matches this query:
+
+```
+> $Message1 = echo '{
+	"stream": { "$ref": "https://mizu.stream/message/$StreamURI" },
+    "posts": ["Roses are red"]
+}' | mizu publish
+```
+
+Before running the query, the client will replace the partial reference in the query with the corresponding absolute reference, so the reference in the message will match.
+
+```
+> curl https://mizu.stream/query/$Stream/query#?message
+[
+	{ "?posts": "Roses are red." }
+]
+```
+
+Giving a message the abilty to explicitly tag itself as belonging to a specific stream or query is an important stepping stone to building applications on Mizu.
+
+At this point, there are several ways that we can address the "Roses are red" string from our most recent message.
+
+*** https://mizu.stream/message/$Message1/#/posts (or `mizu view message $Message1 blog`)
+*** https://mizu.stream/update/$Message1/#/posts (or `mizu view update $Message1 blog`)
+*** https://mizu.stream/query/$Stream/query/#/%3Fposts (or `mizu view query $Stream/query ?post`)
+
+Right now, all of these URLs will resolve to the same data: [ "Roses are red" ]. However, there's an important difference between them.
+
+"message/$Message1/#/posts" (using the "message" action) means "give me the object named 'posts' from raw message $Message1. This value is immutable, and can be referenced by future messages.
+
+"update/$Message1/#/posts" (using the "update" action) means "give me the object named 'posts' as it was set by $UPDATE1, merged with any previous messages." This value is immutable, and can be referenced by future messages. Right now, there are no previous messages, so this is identical to the message action, but we'll see how they differ soon.
+
+"query/$Stream/query/#/%3Fposts" (using the "stream" action) means "give me the object named '?posts' from the query result ('%3F' is just an escaped '?'), as it exists in the present, based on all messages that matched the query." This value is mutable, so it can't be referenced by future messages.
+
+If we publish another update, then the values of these three URLs will diverge. We'll see this happen in the next step.
+
+If a query returns a lot of results, then caching the result could take up a lot of space. Worse, sharing the result with other peers in the network, or getting the most up to date result from the network, could be expensive. This is because when a node asks its peers for messages matching a query, either the requester needs to communicate which messages it already has, or the peers need to send every message it knows about. This can add up to a lot of traffic. Is there an efficient way for nodes in the network to determine the minimum set of data that they need to exchange?
+
+There is! And the `$prev` reserved field can come to the rescue.
+
+## Step 6: Using $prev to create a DAG of messages
+
+
 # TODO: Extend this tutorial.
