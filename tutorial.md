@@ -171,9 +171,9 @@ Giving a message the abilty to explicitly tag itself as belonging to a specific 
 
 At this point, there are several ways that we can address the "Roses are red" string from our most recent message.
 
-*** https://mizu.stream/message/$Message1/#/posts (or `mizu view message $Message1 blog`)
-*** https://mizu.stream/update/$Message1/#/posts (or `mizu view update $Message1 blog`)
-*** https://mizu.stream/query/$Stream/query/#/%3Fposts (or `mizu view query $Stream/query ?post`)
+- https://mizu.stream/message/$Message1/#/posts (or `mizu view message $Message1 blog`)
+- https://mizu.stream/update/$Message1/#/posts (or `mizu view update $Message1 blog`)
+- https://mizu.stream/query/$Stream/query/#/%3Fposts (or `mizu view query $Stream/query ?post`)
 
 Right now, all of these URLs will resolve to the same data: [ "Roses are red" ]. However, there's an important difference between them.
 
