@@ -191,5 +191,47 @@ There is! And the `$prev` reserved field can come to the rescue.
 
 ## Step 6: Using $prev to create a DAG of messages
 
+Let's continue the example from the previous step and publish a second message for our stream:
+
+```
+> $Message2 = echo '{
+	"stream": { "$ref": "https://mizu.stream/message/$StreamURI" },
+    "posts": ["Violets are blue"]
+	"$prev": { "$ref": "https://mizu.stream/update/$Message1" }
+}' | mizu publish
+```
+
+Notice the "$prev" field. This informs any node receiving this message that it depends on $Message1. This means two things:
+- Only having $Message2 is insufficient to interpret the meaning of this object's fields. $Message1 is also required.
+- If a node has both $Message2 and $Message1, it can compute a combined object by performing a Conflict-Free Merge on both objects. If a field exists on both objects (such as the "posts" field) it will union the fields' values.
+
+Thus, the combined object has the field: `"posts" : [ "Roses are red", "Violets are blue" ]`
+
+(Since the type of "posts" is a set, the posts could be displayed in either order.)
+
+Let's look at how three different URIs would be resolved under the hood if queried on another node after this message is published.
+
+- https://mizu.stream/update/$Message1/#/posts
+
+The node will request the message named $Message1 through the peer-to-peer network. After receiving it, it will see that the message defines "posts" without depending on any previous message, and will display the result: { `[ "Roses are red" ]` }
+
+- https://mizu.stream/update/$Message2/#/posts
+
+The node will request the message named $Message2 through the peer-to-peer network. After receiving it, it will see that the message defines "posts", but depends on a definition in $Message1. It will then request $Message1 through the network. (In practice, whichever note responds to the request for $Message2 would also have $Message1 and would respond with them both together, making the second request unnecessary.) Once the requester has both messages, it will be able to assemble the combined result: `[ "Roses are red", "Violets are blue" ]`
+
+- https://mizu.stream/query/$StreamURI/#/%3Fposts
+
+The node will request all records matching the query through the p2p network. If another node that sees the request has $Message2 in its table, it will respond with that (and $Message1, because it will also match the query). However, it's possible that the first response will come from a node that is also not yet up to date: the first node that responds may have only seen $Message. Thus, the request might initially return { "posts" : [ "Roses are red" ] }. Mizu works under the principle of Eventual Consistency, which says that the requesting node will eventually receive the most up to date value. But this may not happen immediately. If the node terminates the request as soon as it receives a response, it may get either of two results: `[ "Roses are red" ]` or `[ "Roses are red", "Violets are blue" ]`
+
+However, even if the node does not immediately receive the most up to date result, the node can choose to keep the connection open, and will eventually get updated with the full result.
+
+TODO: HTTPS doesn't really have a notion of "eventual consistency", the server returns a single response and then closes the connection. The Keep-Alive header field exists and could be abused here, but Google wants to deprecate it.
+
+It's worth noting that the `$prev` field in the above example is technically optional. We could have submitted a message without it, without changing the eventual behavior of the query. However, if do that, then $Message1 and $Message2 will both exist in the database, with neither depending on the other. Moreover, there are no timestamps or other ways to determine which post came first. A new client connecting to the network could receive these messages in either order. 
+
+This might happen if two or more people both have permission to submit an update for a stream and both submit their own update before seeing the other person's update. (These updates don't need to have happened around the same time for this to occur: remember that updates only percolate through the network when someone explicitly requests them.) Thus, Mizu needs to be able to handle these kinds of conflicts without user interaction. That's why it's essential that the underlying data structure is Conflict-Free.
+
+There's another reason to use `$prev`: It allows us to view a set of related messages as a directed acylcic graph (DAG), which allows nodes to efficiently inform their peers of which messages they already have: instead of listing every message CID, they only need to list the CID's of the DAG's "heads" (the messages that don't have another message which references them.) As the total number of messages in the set grows, the number of heads can easily stay constant.
+
 
 # TODO: Extend this tutorial.
