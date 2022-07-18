@@ -23,7 +23,7 @@ An action that determines how to interpret the message specified by the path. Th
 #### Static actions
 - `message`: Return the raw data of the message
 - `update`: Interpret the message as a delta applied to a previous message
-- `template`: Evalute the message as a template, using the provided parameters
+
 #### Dynamic actions
 - `query`: Evaluate the message as a query, returning the result.
 - `stream`: Load the message as a Stream (Mizu's name for a decentralized app).

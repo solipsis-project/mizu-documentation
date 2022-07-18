@@ -326,4 +326,46 @@ $echo '{
 
 Lastly, it's important to talk about the differences between `$include` and `$ref`. Think of `$ref` as a pointer data type: it's a special type in the data model, and queries can see that it's a reference and compare it to other references. Think of `$include` as similar to the `#include` preprocessor directive in the C programming language: it allows you to define code once and include it in multiple places, in a way that's indistinguishable at runtime from code reuse.
 
+## Step 8: Using $schema to validate message structure.
+
+TODO
+
+## Step 9: Templates and $var
+
+In developing applications for Mizu, you'll likely encounter situations where you want to reuse parts of queries, but modify the query parameters. (For instance, in the image gallery example, you want to get all submissions uploaded by a specific username.) We could accomplish this by creating a custom query for each username that `$include`s the reused part of the query, but that's a heavy-handed solution. Instead, we can use the `$var` reserved field to make a template which is later populated by the [URI's parameters](./concepts#mizu-uris).
+
+As a simple example, lets say we want a query that returns all messages in a given stream with a given "author" field. We can write a query template as follows:
+
+```
+$Template = echo '{
+	"@select": "?content",
+	"@where": {
+		{ "$include": "$Stream/@where" },
+		"author": { "$var": "author_param" }
+	},
+	"content": "?content"
+}' | mizu publish
+```
+
+And then we can run the query by providing a value for "author_param".
+
+```
+> curl https://mizu.stream/message/$Template?author_param=hunter2
+{
+	"@select": "?content",
+	"@where": {
+		{ "$include": "$Stream/@where" },
+		"author": "hunter2"
+	}
+	"content": "Hello, World!"
+}
+
+> curl https://mizu.stream/query/$Template?author_param=hunter2
+[
+	{ "?content": "Hello, World!" }
+]
+```
+
+(Alternatively, we could run the query with the command `mizu query $Template --param=author_param=hunter2`.)
+
 # TODO: Extend this tutorial.
