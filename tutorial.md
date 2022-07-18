@@ -234,4 +234,96 @@ This might happen if two or more people both have permission to submit an update
 There's another reason to use `$prev`: It allows us to view a set of related messages as a directed acylcic graph (DAG), which allows nodes to efficiently inform their peers of which messages they already have: instead of listing every message CID, they only need to list the CID's of the DAG's "heads" (the messages that don't have another message which references them.) As the total number of messages in the set grows, the number of heads can easily stay constant.
 
 
+## Step 7: Using $include to prevent redundancy and include readability
+
+Making sure that streams are readable isn't a concern for stream users, but can be important for stream maintainers. The `$include` reserved field gives stream writers more control over the layout of the message that defines the stream, including spreading out the definition across multiple messages, or reducing redundancy that would otherwise be needed.
+
+Consider the first step in the [Image Gallery Example](./image_gallery_example). We want to create a stream computes a list of users that have an associated "join" message but don't have a corresponding "kick" message. If we wanted to implement that without using the `$include` reserved field, we might do it as follows:
+
+```
+$echo '{
+	"title": "Mizu Art Gallery",
+	"get_users": {
+		"@select" : ["?user_name", "?user_key"],
+		"@where": [{
+			"stream": { "$ref": "#" },
+			"$$signatues": {
+				"key": "?user_key"
+			}
+			"action_type:" "join"
+			"user_key": "?user_key",
+			"user_name": "?user_name"
+		},
+		{
+			"@not": {
+				"$$signatues": {
+					"@union": [
+						{"key": "?user_key"},
+						{"key": "$ADMIN_KEY"}
+					]
+				}
+				"user_key": "?user_key",
+				"stream": { "$ref": "#" },
+				"action_type": "kick"
+			}
+		}]
+	}
+}' | mizu publish
+```
+
+There are two issues here that hurt readability.
+
+1. The admin key is hardcoded into the query definition. Someone trying to look up the admin key would need to parse the query in order to find it. And if we add a second query that matches against the same admin key, or if we want to reference the admin key elsewhere in the same query, the hardcoded key will need to be copied and pasted into each location that needs it. If you decide to change the key, you need to change it every place it's been copied too, and if you forget one, now you have a stream that accepts the wrong key as an admin! We shouldn't need to repeat ourselves like this.
+
+2. The query is rather complicated and made of multiple parts with different purposes. It would be a lot more readable if we could name those parts, define them in a place that allows the code to be more organized, and then reference them later.
+
+The `$include` field can do both of these things.
+
+Here's what that message might look like with proper use of `$include`:
+
+```
+$echo '{
+	"title": "Mizu Art Gallery",
+	"admin_key": "$ADMIN_KEY",
+	
+	"join_message": {
+		{
+			"@id": "?id"
+			"stream": { "$ref": "#" },
+			"$$signatues": {
+				"key": "?user_key"
+			}
+			"action_type:" "join"
+			"user_key": "?user_key",
+			"user_name": "?user_name"
+		},
+	},
+	"kick_message": {
+		{
+			"stream": "#",
+			"$$signatues": {
+				"@union": [
+					{"key": "?user_key"},
+					{"key": { "$include" : "#/admin_key"} }
+				]
+			}
+			"action_type:" "kick"
+			"user_key": "?user_key",
+		},
+	}
+	"get_users": {
+		"@select" : ["?user_name", "?user_key"],
+		"@where": [
+			{ "$include": "#/join_message },
+			{
+				"@not": { "$include": "#/kick_message" }
+			}
+				
+		]
+	}
+}' | mizu publish
+```
+
+Lastly, it's important to talk about the differences between `$include` and `$ref`. Think of `$ref` as a pointer data type: it's a special type in the data model, and queries can see that it's a reference and compare it to other references. Think of `$include` as similar to the `#include` preprocessor directive in the C programming language: it allows you to define code once and include it in multiple places, in a way that's indistinguishable at runtime from code reuse.
+
 # TODO: Extend this tutorial.
