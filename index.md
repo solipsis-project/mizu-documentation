@@ -1,4 +1,9 @@
+NOTE: Mizu is unreleased software. These tutorials are an informal specification of how Mizu *should* function, not a description of currently implemented behavior.
+
+If you want to get involved with Mizu, drop me an email at the.solipsis.project@gmail.com
+
 # Mizu: RSS meets Git meets P2P file sharing built on top of [IPFS](https://ipfs.io), [libP2P](https://libp2p.io), and [json-rql](https://json-rql.org/)
+ 
 
 Mizu is a decentralized datastore with pubsub features, allowing subscription to content feeds that still function even if the source of the content goes down. Mizu is even expressive enough to allow for the creation of decentralized apps for creating and interacting with content published on the Mizu network.
 
