@@ -1,6 +1,6 @@
 NOTE: Mizu is unreleased software. These tutorials are an informal specification of how Mizu *should* function, not a description of currently implemented behavior.
 
-If you want to get involved with Mizu, [check it out on GitHub](https://github.com/solipsis-project/mizu) drop me an email at the.solipsis.project@gmail.com
+If you want to get involved with Mizu, [check it out on GitHub](https://github.com/solipsis-project/mizu), or drop me an email at the.solipsis.project@gmail.com
 
 # Mizu: RSS meets Git meets P2P file sharing built on top of [IPFS](https://ipfs.io), [libP2P](https://libp2p.io), and [json-rql](https://json-rql.org/)
  
