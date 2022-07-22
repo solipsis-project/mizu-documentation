@@ -36,7 +36,7 @@ $GalleryUsersStream = echo '{
 			"$$signatues": {
 				"key": "?user_key"
 			}
-			"action_type:" "join"
+			"transaction_type:" "join"
 			"user_key": "?user_key",
 			"user_name": "?user_name"
 		},
@@ -50,7 +50,7 @@ $GalleryUsersStream = echo '{
 					{"key": "$ADMIN_KEY" }
 				]
 			}
-			"action_type:" "kick"
+			"transaction_type:" "kick"
 			"user_key": "?user_key",
 		},
 	}
@@ -71,7 +71,7 @@ $GalleryUsersStream = echo '{
 
 Once users are enrolled in the gallery, they can start uploading submissions.
 
-We'll define two new action types: "upload_submission" and "redact_submission".
+We'll define two new transaction types: "upload_submission" and "redact_submission".
 
 ```
 $GallerySubmissionsStream = echo '{
@@ -82,7 +82,7 @@ $GallerySubmissionsStream = echo '{
 			"key": "?user_key"
 		}
 		"user_key": "?user_key",
-		"action_type": "upload_submission"
+		"transaction_type": "upload_submission"
 		"content": "?content",
 		"allow_comments": "?allow_comments"
 	}
@@ -95,7 +95,7 @@ $GallerySubmissionsStream = echo '{
 			]
 		}
 		"user_key": "?user_key",
-		"action_type": "redact_submission"
+		"transaction_type": "redact_submission"
 		"submission": "?submission"
 	}
 	"get_user_submissions": {
@@ -128,7 +128,7 @@ This introduces a possible attack vector: a bad actor could overwhelm the networ
 
 One approach would be for there to be a list of "verified" accounts that can only be modified by an admin. Creating an account does not cause it to be immediately verified.
 
-This only requires a single new action type: "verify_account". (Accounts don't get unverified, they just get kicked instead.)
+This only requires a single new transaction type: "verify_account". (Accounts don't get unverified, they just get kicked instead.)
 
 ```
 $GalleryVerifiedAccounts = echo '{
@@ -140,7 +140,7 @@ $GalleryVerifiedAccounts = echo '{
 		}
 		"user_key": "?user_key",
 		"user_name": "?user_name",
-		"action_type": "verify_account"
+		"transaction_type": "verify_account"
 	}
 	"get_users": {
 		"@select" : ["?user_name", "?user_key"],
@@ -167,7 +167,7 @@ $GalleryVerifiedAccounts = echo '{
 
 Another feature that web galleries have is comments. Let's enable submissions to have comments. 
 
-We'll create new action types: "post_comment" and "redact_comment". A comment can be redacted by the user who made it, the owner of the submission, or an admin.
+We'll create new transaction types: "post_comment" and "redact_comment". A comment can be redacted by the user who made it, the owner of the submission, or an admin.
 
 Comments can also be edited.
 

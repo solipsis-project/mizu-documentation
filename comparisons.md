@@ -103,6 +103,10 @@ Perkeep is a tool for creating personal data backups that eschews conventional d
 
 One area Mizu may be able to draw from is Perkeep's efforts to tackle the "json canonicalization" problem of ensuring that an object blob (in this case, json) has a single canonical representation for signing and data-addressing. (https://perkeep.org/doc/json-signing/) If Mizu ends up needing to content-address json, we may be able to build on top of this work. However, the more likely solution for Mizu is to represent all structured data internally using a non-human readable format like IPFS's dag-cbor, and only parsing from / rendering to JSON at the endpoint.
 
+### Bup
+
+Bup (https://github.com/bup/bup) is a content-addressible datastores designed for single users to maintain private backups of their data. Bup is a content-addressible datastore built on top of git. It supports named versioned archives. Like Perkeep, Data is backed up to a single server and is not designed to be publicly accessible or sharded.
+
 
 ## Other p2p networks.
 

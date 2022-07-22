@@ -58,7 +58,7 @@ The simplest stream is represented by just a single user (a public key), which m
 
 A stream is added just like any other piece of data in the system, by publishing a message to the network:
 
-For a detailed example of stream syntax, check out our [Query Tutorial](./tutorial) and [Stream Tutorial](./stream)
+For a detailed example of stream syntax, check out our [Query Tutorial](./tutorial) and [Stream Tutorial](./streams_tutorial)
 
 ## Private Messages
 
