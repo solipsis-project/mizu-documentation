@@ -2,12 +2,13 @@ NOTE: Mizu is unreleased software. These tutorials are an informal specification
 
 If you want to get involved with Mizu, [check out the project on GitHub](https://github.com/users/solipsis-project/projects/1/views/1), or look at [the code](https://github.com/solipsis-project/mizu), or drop me an email at the.solipsis.project@gmail.com
 
-# Mizu: RSS meets Git meets P2P file sharing built on top of [IPFS](https://ipfs.io), [libP2P](https://libp2p.io), and [json-rql](https://json-rql.org/)
- 
+# Mizu: The decentralized database built on [IPFS](https://ipfs.io), [libP2P](https://libp2p.io), and [json-rql](https://json-rql.org/), designed for connecting publishers and subscribers.
 
-Mizu is a decentralized datastore with pubsub features, allowing subscription to content feeds that still function even if the source of the content goes down. Mizu is even expressive enough to allow for the creation of decentralized apps for creating and interacting with content published on the Mizu network.
+Think RSS meets Git meets Bittorrent.
 
-The core unit of data in Mizu is a Message, which is a row of a triplestore database, stored in a distributed hash table and shared with other nodes in the network on request.
+Like IPFS, users of the Mizu network can request static content based on its Content-ID (or CID). In addition, because Mizu is a database, applications built on Mizu can make database queries, asking their network peers for necessary records, including the most up-to-date information.
+
+This allows for the creation of pubsub feeds (akin to RSS), where content subscribers can share updates with each other, increasing availability and reducing bandwidth costs for the publisher, all without forcing publishers to rely on centralized content hosting services. Mizu is even expressive enough to allow for the creation of decentralized apps for creating and interacting with content published on the Mizu network.
 
 Mizu is different from other distributed databases: instead of proactively trying to replicate the entire database on each node, only data that is specifically requested by other users is replicated. This makes Mizu more like IPFS but for mutable data: only the data you actually need is on your node.
 
