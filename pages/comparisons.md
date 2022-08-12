@@ -1,3 +1,9 @@
+---
+title: "Comparisons"
+permalink: comparisons.html
+summary: How Mizu differs from, draws inspiration from, and builds on other tools in the decentralized application space.
+---
+
 # What Mizu is not
 
 ## Other decentralized application platforms

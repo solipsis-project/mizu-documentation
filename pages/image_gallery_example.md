@@ -1,3 +1,9 @@
+---
+title: "Building an Image Gallery in Mizu"
+permalink: image_gallery_example.html
+summary: A sample image gallery, built in Mizu
+---
+
 # Building an Image Gallery in Mizu
 
 The important key concepts of an application running on Mizu are as follows:

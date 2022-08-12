@@ -1,4 +1,10 @@
-# Mizu Tutorial
+---
+title: "Command Line Tutorial"
+permalink: tutorial.html
+summary: A listing of all reserved fields, and how they're used to validate transactions.
+---
+
+# Command Line Tutorial
 
 The purpose of this document is to explain how Mizu is used and how it can be useful to you by walking through a sample UI flow, where Mizu is used to create a decentralized pubsub for a blog, a reblog, a static website, and finally a multi-user art gallery complete with comments and favorites.
 

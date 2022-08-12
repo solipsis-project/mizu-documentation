@@ -1,3 +1,9 @@
+---
+title: "Core Concepts"
+permalink: concepts.html
+summary: An high-level of important concepts in Mizu
+---
+
 # Core Concepts
 
 ## Mizu URIs

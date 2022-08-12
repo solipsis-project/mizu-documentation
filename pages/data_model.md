@@ -1,3 +1,9 @@
+---
+title: "Data Model"
+permalink: data_model.html
+summary: A primer on Mizu's data model
+---
+
 # Data Model
 
 All data in Mizu is stored in a distributed triplestore database; that is, an unordered set of records, each of which is a triple of the form `subject, verb, object`.

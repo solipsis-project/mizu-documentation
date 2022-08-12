@@ -1,3 +1,9 @@
+---
+title: "Reserved Fields"
+permalink: reserved_fields.html
+summary: A listing of all reserved fields, and how they're used to validate transactions.
+---
+
 # Reserved Fields
 
 Some message fields start with a $. These are reserved fields, and each one has special semantics, either purely for message validation, or for one or more Mizu actions. Reserved fields are validated when a message is published or when received by a node: thus, all published messages can be assumed to obey certain constraints specified in this document. Names starting with a $ that are not listed here are reserved for later use and cannot be used in messages: clients must reject messages containing any such fields.
