@@ -5,20 +5,44 @@ entries:
   levels: one
   folders:
 
-  - title: Products
+  - title: Getting Started
     output: web
     folderitems:
-    - title: News
-      url: /news.html
+    - title: Core Concepts
+      url: /core_concepts.html
       output: web
-    - title: Theme instructions
-      url: /mydoc_introduction.html
+    - title: Comparisons to Alternatives
+      url: /comparisons.html
       output: web
-    - title: Product 1
-      url: /p1_landing_page.html
+
+
+  - title: Specifications
+    output: web
+    folderitems:
+    - title: Client Configuration
+      url: /client_configuration.html
+      output:
+    - title: Data Model
+      url: /data_model.html
       output: web
-    - title: Product 2
-      url: /p2_landing_page.html
+    - title: Query Syntax
+      url: /query_syntax.html
+      output:
+    - title: Reserved Fields
+      url: /reserved_fields.html
+      output: web
+
+  - title: Tutorials
+    output: web
+    folderitems:
+    - title: Command Line Examples
+      url: /tutorial.html
+      output: web
+    - title: Streams
+      url: /streams_tutorial.html
+      output:
+    - title: Creating an Image Gallery
+      url: /image_gallery_example.html
       output: web
 
 # Copyright 2021 Google LLC
