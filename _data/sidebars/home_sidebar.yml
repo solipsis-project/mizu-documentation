@@ -9,7 +9,7 @@ entries:
     output: web
     folderitems:
     - title: Core Concepts
-      url: /core_concepts.html
+      url: /concepts.html
       output: web
     - title: Comparisons to Alternatives
       url: /comparisons.html
