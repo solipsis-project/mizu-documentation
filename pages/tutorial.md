@@ -20,6 +20,7 @@ Upon publishing a message, it receives a CID that can be used to refer to the me
 
 We can use Mizu's command line interface for publishing messages, which takes a message from stdin and prints the CID to stdout. An example might look like this:
 
+[test]: #
 ```
 > $HelloWorld = echo '{ "text": "Hello, world!" }' | mizu publish
 bafyreihedihs5xnwh52scar3h2irbzvb5cqjjsf4axjhcbntqowjlhthya
@@ -45,6 +46,7 @@ There are two different syntaxes for queries: json-rql syntax and SPARQL syntax.
 
 Consider the following example:
 
+[test]: #
 ```
 > echo '{ "author": "solipsis", "content": "roses are red" }' | mizu publish
 bafyreierxqzf7k7a7nhbfdoq2hs4fnbrytfjlj4namu7bakzt55hz4uylu
@@ -67,6 +69,7 @@ We want some way for nodes in the network to validate certain properties of mess
 
 If we want to make a query that only returns messages we published, we can use the ["$signatures" reserved field](./reserved_fields#signatures).
 
+[test]: #
 ```
 > echo '{ 
   "$signatures": [ 
