@@ -4,4 +4,7 @@ Mizu: The decentralized database built on IPFS, libP2P, and json-rql, designed f
 
 Think RSS meets Git meets Bittorrent.
 
-https://mizu.stream/
+Website: https://mizu.stream/
+
+Matrix: [mizu:matrix.org](https://matrix.to/#/#mizu:matrix.org)
+Discord: https://discord.gg/kEW32kWsaA

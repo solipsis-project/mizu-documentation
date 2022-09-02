@@ -7,7 +7,13 @@ summary: A brief introduction to the Mizu platform.
 
 NOTE: Mizu is unreleased software. These tutorials are an informal specification of how Mizu *should* function, not a description of currently implemented behavior.
 
-If you want to get involved with Mizu, [check out the project on GitHub](https://github.com/users/solipsis-project/projects/1/views/1), or look at [the code](https://github.com/solipsis-project/mizu-client), or drop me an email at the.solipsis.project@gmail.com
+If you want to get involved with Mizu:
+
+- [Check out the project on GitHub](https://github.com/users/solipsis-project/projects/1/views/1)
+- [Look at the code](https://github.com/solipsis-project/mizu-client)
+- Join the Matrix space at [mizu:matrix.org](https://matrix.to/#/#mizu:matrix.org)
+- [Join the Discord server](https://discord.gg/kEW32kWsaA)
+- Drop me an email at the.solipsis.project@gmail.com
 
 # Mizu: The decentralized database built on [IPFS](https://ipfs.io), [libP2P](https://libp2p.io), and [json-rql](https://json-rql.org/), designed for connecting publishers and subscribers.
 
