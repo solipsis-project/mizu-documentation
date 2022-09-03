@@ -8,11 +8,15 @@ summary: An high-level of important concepts in Mizu
 
 ## Mizu URIs
 
-A Mizu URI is made up of a path, the fragment, and the parameters. The format of a mizu URI is:
+A Mizu URI is made up of an action, and some content-addressed data that the action uses. If the action has additional parameters, then those are included as URI query parameters. The format of a mizu URI is:
 
-https://mizu.stream/{action]/{cid}/{path}[#{fragment}][?{parameters}]
+https://mizu.stream/{version}/{action]/{cid}/{path}[/?{parameters}][/#{fragment}]
 
 Note that just because a Mizu URI begins with "https://mizu.stream/" doesn't mean that a DNS lookup for mizu.stream will necessarily occur, or that the https protocol will be used to resolve the URI. It's merely an identifier that allows Mizu URIs to be easily identified, chosen to coincide with the Mizu reference gateway at https://mizu.stream (which *does* use DNS and HTTPS to resolve requests).
+
+### Version
+
+Currently this is always the string "v0".
 
 ### Cid
 
@@ -34,13 +38,13 @@ An action that determines how to interpret the message specified by the path. Th
 - `query`: Evaluate the message as a query, returning the result.
 - `stream`: Load the message as a Stream (Mizu's name for a decentralized app).
 
+### Parameters
+
+If the message pointed to by the CID is a template, the values provided here replace the template's parameters prior to interpretation.
+
 ### Fragment
 
 Often, a Mizu action resolves to a structured object. We may want to identify only part of that object. The fragment tells us which part.
-
-### Parameters
-
-Additional paramaters that may affect how the message is evaluated. Not used for all URIs.
 
 ## Publishing Messages
 
