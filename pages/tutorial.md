@@ -72,14 +72,14 @@ If we want to make a query that only returns messages we published, we can use t
 [test]: #
 ```
 > echo '{ 
-  "$signatures": [ 
-    {
-	  "key": "bafzbeiaibfu7pu3k36mgbmymh5ae75hmn6jnmzo26x2pzis6zv7bxncge4",
-	  "digest": "yagslalikjomkjqejkqqouyuriptfyijevbnds4d46abbcrzc6v2a53u3wyx7vajffhidviypkvkahtqc5uzw3ah464lbk4hzaogzeo5cht3mayktqvv225fuf7a6c3r2fhmrdhgdbh54vcfdnclq44qvd3weyxmmkeoq6owjap46ftvrbvj2t6kosm3qs6gbhl3pfmy43vodxk3ryp2hq2pecoh6uzj57sngqu4affuehs2eeh54ylxme6qbaamkyhcmjizzqpog2cdwrgg26ub7f7xvguf3mtgdkl6dlzgm3oa3aaa4cymk2v3lvlhhueo5qo774xqefmi2va5mcwzf6ruxr4qgddrni24trm7bo4ce3zpodaikr6chzcqsipjwrziz6nqiih4bmmnxnwc3m"
-	}
-  ],
-  "content": "roses are red"
-}' | mizu publish
+    "$signatures": [ 
+      {
+  	    "key": "bafzbeiaibfu7pu3k36mgbmymh5ae75hmn6jnmzo26x2pzis6zv7bxncge4",
+	    "digest": "yagslalikjomkjqejkqqouyuriptfyijevbnds4d46abbcrzc6v2a53u3wyx7vajffhidviypkvkahtqc5uzw3ah464lbk4hzaogzeo5cht3mayktqvv225fuf7a6c3r2fhmrdhgdbh54vcfdnclq44qvd3weyxmmkeoq6owjap46ftvrbvj2t6kosm3qs6gbhl3pfmy43vodxk3ryp2hq2pecoh6uzj57sngqu4affuehs2eeh54ylxme6qbaamkyhcmjizzqpog2cdwrgg26ub7f7xvguf3mtgdkl6dlzgm3oa3aaa4cymk2v3lvlhhueo5qo774xqefmi2va5mcwzf6ruxr4qgddrni24trm7bo4ce3zpodaikr6chzcqsipjwrziz6nqiih4bmmnxnwc3m"
+	  }
+    ],
+    "content": "roses are red"
+  }' | mizu publish
 bafyreigbi3qsut4smii736l6oq66ktaxlc3fuh2fesiyn7whi7kbiyjl44
 ```
 
