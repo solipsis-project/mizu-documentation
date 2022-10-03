@@ -46,7 +46,6 @@ There are two different syntaxes for queries: json-rql syntax and SPARQL syntax.
 
 Consider the following example:
 
-[test]: #
 ```
 > echo '{ "author": "solipsis", "content": "roses are red" }' | mizu publish
 bafyreierxqzf7k7a7nhbfdoq2hs4fnbrytfjlj4namu7bakzt55hz4uylu
@@ -80,7 +79,7 @@ If we want to make a query that only returns messages we published, we can use t
     ],
     "content": "roses are red"
   }' | mizu publish
-bafyreigbi3qsut4smii736l6oq66ktaxlc3fuh2fesiyn7whi7kbiyjl44
+bafyreicxbb5e4mcx6747b5ev3zhiyy74gi6ixaaamzpf4iwvtwtde6oxbm
 ```
 
 In this message, the `$signatures` field contains one or more key-signature pairs that have signed the rest of the message. When the message is published to a node, or when a node receives the message from another node, it verifies the integrity of the signatures, and only accepts the message if every signature is valid.
