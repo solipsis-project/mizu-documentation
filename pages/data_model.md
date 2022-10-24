@@ -15,7 +15,7 @@ Note that multiple records may have the same subject and verb but different obje
 - An object that allows multiple fields with the same name.
 - An object where all field values are sets (whose elements are not sets).
 
-In the latter case, we may say that a field has a non-set value (a primitive or another object), but this is equivalent the field value being a set with one element.
+In the latter case, we may say that a field has a non-set value (a primitive or another object), but this is equivalent to the field value being a set with one element.
 
 Mizu uses two different encoding schemes: CBOR for binary messages and JSON for human-readable messages.
 
