@@ -20,7 +20,7 @@ Upon publishing a message, it receives a CID that can be used to refer to the me
 
 We can use Mizu's command line interface for publishing messages, which takes a message from stdin and prints the CID to stdout. An example might look like this:
 
-[test]: #
+[test]: # (publishSimple)
 ```
 > $HelloWorld = echo '{ "text": "Hello, world!" }' | mizu publish
 bafyreihedihs5xnwh52scar3h2irbzvb5cqjjsf4axjhcbntqowjlhthya
@@ -46,15 +46,22 @@ There are two different syntaxes for queries: json-rql syntax and SPARQL syntax.
 
 Consider the following example:
 
+[test]: # (querySimple)
 ```
 > echo '{ "author": "solipsis", "content": "roses are red" }' | mizu publish
 bafyreierxqzf7k7a7nhbfdoq2hs4fnbrytfjlj4namu7bakzt55hz4uylu
 > echo '{ "author": "solipsis", "content": "violets are blue" }' | mizu publish
 bafyreibgpiqlk3y7xjbcse6ggm26zk7ovwqia5psmtqxp5gm4zohet3oua
-> echo '{ "@select": "?message", "@where": { "@id": "?message", "author": "solipsis" } }' | mizu query
+> echo '{ "author": "shakespeare", "content": "grass is green" }' | mizu publish
+bafyreifwkg6xtj52qioi7gs2bvxljfc4yynestkbgwswa5qkd5ifhhyiiy
+> echo 'SELECT ?message WHERE { ?message <author> "solipsis"}' | mizu query
 [
-	{'?message':  'https://mizu.stream/message/bafyreierxqzf7k7a7nhbfdoq2hs4fnbrytfjlj4namu7bakzt55hz4uylu'},
-	{'?message':  'https://mizu.stream/message/bafyreibgpiqlk3y7xjbcse6ggm26zk7ovwqia5psmtqxp5gm4zohet3oua'}
+  {
+    "?message": "https://mizu.stream/bafyreierxqzf7k7a7nhbfdoq2hs4fnbrytfjlj4namu7bakzt55hz4uylu"
+  },
+  {
+    "?message": "https://mizu.stream/bafyreibgpiqlk3y7xjbcse6ggm26zk7ovwqia5psmtqxp5gm4zohet3oua"
+  }
 ]
 ```
 
@@ -68,7 +75,7 @@ We want some way for nodes in the network to validate certain properties of mess
 
 If we want to make a query that only returns messages we published, we can use the ["$signatures" reserved field](./reserved_fields#signatures).
 
-[test]: #
+[test]: # (publishWithSignature)
 ```
 > echo '{ 
     "$signatures": [ 
