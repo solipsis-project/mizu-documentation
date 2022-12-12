@@ -1,7 +1,7 @@
 ---
 title: "Command Line Tutorial"
 permalink: tutorial.html
-summary: A listing of all reserved fields, and how they're used to validate transactions.
+summary: A walkthrough of Mizu's various features, with command line examples.
 ---
 
 # Command Line Tutorial
@@ -26,13 +26,13 @@ We can use Mizu's command line interface for publishing messages, which takes a 
 bafyreihedihs5xnwh52scar3h2irbzvb5cqjjsf4axjhcbntqowjlhthya
 ```
 
-If you want to view a message that's already been published to the network, you can do that via the `mizu view` command, or via a HTTP gateway.
+If you want to view a message that's already been published to the database, you can do that via the `mizu view` command.
 
 `mizu view message $HelloWorld`
-or
-`curl https://mizu.stream/message/$HelloWorld`
 
-`mizu view message` will print the original contents of a message to stdout, while visititing https://mizu.stream/message/{MESSAGE} will contain the original message as an HTTP response.
+`mizu view message` will print the original contents of a message to stdout.
+
+(Once the HTTP gateway is live, you will also be able to view the message contents by sending a request to `https://mizu.stream/message/$HelloWorld`, which will return the original message as an HTTP response.)
 
 So far, this isn't doing anything that couldn't be done with IPFS alone. To truly leverage the benefits of Mizu, we need to learn about queries.
 
@@ -42,7 +42,7 @@ A client can query the database to get all records that match a particular patte
 
 Suppose we want to have a query that will return all of our own messages. How might we do that?
 
-There are two different syntaxes for queries: json-rql syntax and SPARQL syntax. They're specified [here](./query_syntax). These examples use the json-rql syntax.
+There are two different syntaxes for queries: json-rql syntax and SPARQL syntax. They're specified [here](./query_syntax). These examples use the json-rql syntax, which is also the default.
 
 Consider the following example:
 
@@ -54,20 +54,20 @@ bafyreierxqzf7k7a7nhbfdoq2hs4fnbrytfjlj4namu7bakzt55hz4uylu
 bafyreibgpiqlk3y7xjbcse6ggm26zk7ovwqia5psmtqxp5gm4zohet3oua
 > echo '{ "author": "shakespeare", "content": "grass is green" }' | mizu publish
 bafyreifwkg6xtj52qioi7gs2bvxljfc4yynestkbgwswa5qkd5ifhhyiiy
-> echo 'SELECT ?message WHERE { ?message <author> "solipsis"}' | mizu query
+> echo 'SELECT ?content WHERE { ?message <author> "solipsis"; <content> ?content }' | mizu query
 [
   {
-    "?message": "https://mizu.stream/bafyreierxqzf7k7a7nhbfdoq2hs4fnbrytfjlj4namu7bakzt55hz4uylu"
+    "?content": "roses are red"
   },
   {
-    "?message": "https://mizu.stream/bafyreibgpiqlk3y7xjbcse6ggm26zk7ovwqia5psmtqxp5gm4zohet3oua"
+    "?content": "violets are blue"
   }
 ]
 ```
 
-This will work even if the publish commands and the query command were run on different nodes!
+Once the Mizu network is up and running (see our [roadmap](./roadmap), this will work even if the publish commands and the query command were run on different nodes!
 
-However, there's an obvious problem with this approach: since our query will match against any message that has an "author" field set to the appropriate value, our query could easily return unwanted extra results. And to make things worse, there's nothing stopping anyone from publishing messages that match our query. If you run this command yourself, you may can many, many, additional results.
+However, there's an obvious problem with this approach: since our query will match against any message that has an "author" field set to the appropriate value, our query could easily return unwanted extra results. And to make things worse, there's nothing stopping anyone from publishing messages that match our query. If you run this command yourself, you may get many, many, additional results.
 
 We want some way for nodes in the network to validate certain properties of messages, such as author, and then run a query on those properties. Reserved fields can do this for us.
 
@@ -96,9 +96,9 @@ Note that in practice you wouldn't hand-craft the `$signatures` field, your clie
 Now if we run a query similar to the one above, we'll only get a single result, since this is the only message on the network signed with this key.
 
 ```
-> echo '{ "@select": "?message", "@where": { "@id": "?message", "$$signatures": { "key": "bafzbeiaibfu7pu3k36mgbmymh5ae75hmn6jnmzo26x2pzis6zv7bxncge4" } } }' | mizu query
+> echo '{ "@select": "?content", "@where": { "@id": "?message", "content": "?content", "$$signatures": { "key": "z7ySHQR7YZJApfZRKds9hzzFypZo8s6WQyZqXCYVHRjug84TSqhdKFY31iMwB8k3KiNjhdbUjEABSL7VsC3Pn17MMDSqkQsC5wTCTkHhiHaD5FyWAYhnpKMjgLDJMPxVgUg69KkbjMyWgEVi9UqPYbamzfdSCZ6cpgDSr5iEBvhk3uHq6GbhAAoFMfBwdW2BBS2hr43SRafYDTY15hCsKD1DLSDuBnLNqwNi1yHv7Nr83S1dqPsPCG34LUVcADDSzshHa6XHS2TWNnmxGhgPMgiCFWvzW19nnHN9D2sFjskxXiDxiDTEcF8pNZsupxSGLw93gsJATZpNVSRBCQkeXVfyPm1kVKDPLbADA5dujRRWMbsQreZEd5y8kChjAeZzCWwfFCY7YeLeNapmVhTfAxiye" } } }' | mizu query
 [
-	{'?message':  'https://mizu.stream/message/bafyreigbi3qsut4smii736l6oq66ktaxlc3fuh2fesiyn7whi7kbiyjl44'},
+	{'?content':  'roses are red'},
 ]
 ```
 
@@ -121,7 +121,7 @@ bafyreidjms562ffchpdjwb4y6yyzojwll2mkcckvy6aemreg3smqotgh3i
 
 Notice how the two URIs in the above example use different [actions](./concepts#action). The `message` action returns the original message, while the `query` message interprets the message as a query and returns the results. You can share this query URI with anyone and they'll be able to get all of your published messages that match the query. Anyone can use this URI akin to an RSS feed to subscribe to your published content. A more complicated query could even return metadata like post titles and descriptions, and sort the results to put the most recent posts first. An RSS-like app could render this query in a more human-readible way.
 
-But unlike RSS, which assumes that the feeds have a specific structure and should be rendered a specific way, a Mizu query could return data in almost any structure, used for almost any purpose. But what if the message the contains the query also contains metadata that dictates how the results of the query should be displayed and interacted with (such as html and stylesheets)?
+But unlike RSS, which assumes that the feeds have a specific structure and should be rendered a specific way, a Mizu query could return data in almost any structure, used for almost any purpose. But what if the message that contains the query also contains metadata that dictates how the results of the query should be displayed and interacted with (such as html and stylesheets)?
 
 We call a message that contains both queries and markup language for rendering those queries, a Stream.
 
