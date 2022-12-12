@@ -12,7 +12,9 @@ The current list of reserved fields includes:
 
 ### $signatures
 
-Used for signing messages. The value of `$signatures` must be a list of objects with exactly two fields: `key` containing a multihash of the public key, and `digest` containing the actual signature.
+Used for signing messages. The value of `$signatures` must be a list of objects with exactly two fields: `key` containing a multihash of the public key (as exported by the libp2p-crypto library), and `digest` containing the actual signature.
+
+Both fields are base58btc-encoded strings. (This is done so that the message is human-readable when encoded as JSON, but it has the notable side-effect that when a Mizu message is serialized as dag-cbor, which happens when a message is stored in IPFS, we end up storing a binary encoding of a string that is itself a human-readable encoding of a hash.)
 
 During publishing, the contents of the object, minus the `$signatues` field, are serialized as dag-cbor, and then verified against each provided signature. If the verification of any provided signature fails, the message is not published.
 
