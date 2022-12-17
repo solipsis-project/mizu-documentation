@@ -31,7 +31,7 @@ The path portion of a Mizu URI is used to identify the component of the message 
 An action that determines how to interpret the message specified by the path. There are two types of actions: static actions, which always resolve to the same response, and dynamic actions, which can resolve to different responses depending on the current state of the network and local database. The different allowed actions are:
 
 #### Static actions
-- `message`: Return the raw data of the message
+- `view-raw`: Return the raw data of the message
 - `update`: Interpret the message as a delta applied to a previous message
 
 #### Dynamic actions

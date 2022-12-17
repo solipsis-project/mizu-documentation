@@ -119,7 +119,7 @@ bafyreidjms562ffchpdjwb4y6yyzojwll2mkcckvy6aemreg3smqotgh3i
 ]
 ```
 
-Notice how the two URIs in the above example use different [actions](./concepts#action). The `message` action returns the original message, while the `query` message interprets the message as a query and returns the results. You can share this query URI with anyone and they'll be able to get all of your published messages that match the query. Anyone can use this URI akin to an RSS feed to subscribe to your published content. A more complicated query could even return metadata like post titles and descriptions, and sort the results to put the most recent posts first. An RSS-like app could render this query in a more human-readible way.
+Notice how the two URIs in the above example use different [actions](./concepts#action). The `view-raw` action returns the original message, while the `query` action interprets the message as a query and returns the results. You can share this query URI with anyone and they'll be able to get all of your published messages that match the query. Anyone can use this URI akin to an RSS feed to subscribe to your published content. A more complicated query could even return metadata like post titles and descriptions, and sort the results to put the most recent posts first. An RSS-like app could render this query in a more human-readible way.
 
 But unlike RSS, which assumes that the feeds have a specific structure and should be rendered a specific way, a Mizu query could return data in almost any structure, used for almost any purpose. But what if the message that contains the query also contains metadata that dictates how the results of the query should be displayed and interacted with (such as html and stylesheets)?
 
