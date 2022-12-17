@@ -35,7 +35,7 @@ To understand the similarities and differences between Mizu and other similar te
 
 ## Online Use Cases
 
-Mizu can be used to reduce hosting costs by leveraging peer to peer file sharing: subscribers to content share updates with each other. This allows the data to change and evolve and still distribute updates to all subscribers. Producers no longer need to be married to a centralized platform or their rules in order to gain the benefits of cheap file hosting.
+Mizu can be used to reduce hosting costs by leveraging peer to peer file sharing: content subscribers share updates with each other. This allows the data to change and evolve and still distribute updates to all subscribers. Producers no longer need to be married to a centralized platform or their rules in order to gain the benefits of cheap file hosting.
 
 ## Offline Use Cases
 
