@@ -171,7 +171,47 @@ We'd much rather have the Mizu command line interface create keys and digests fo
 
 For more information, check out [Client Configuration](./client_configuration)
 
-TODO: Describe how to configure the client to auto-sign messages.
+We can set Mizu to sign the messages that it publishes by passing the --pem flag to the publish action. The `mizu keygen` command is guarenteed to produce keys that are Mizu-compatilbe.
+
+```
+> mizu keygen 'password' > ~/mizu_key.pem
+
+> $SignedCID = echo '{ "this content": "is signed" }' | mizu publish --pem ~/mizu_key.pem,password
+...
+> mizu view-raw $SignedCID
+{
+	"this content": "is signed",
+	"$signatures": [
+		{
+			key: "...",
+			digest: "...",
+		}
+	]
+}
+```
+
+(To use an unencrypted key, simply omit the password fragment in both `mizu keygen` and `mizu publish`.)
+
+If you'd rather not have to pass this extra argument to every call to `mizu publish`, you can save it in your Mizu config:
+
+```
+> mizu config set pem ~/mizu_key.pem,password
+
+> $AlsoSignedCID = echo '{ "this content": "is also signed" }' | mizu publish
+...
+> mizu view-raw $AlsoSignedCID
+{
+	"this content": "is also signed",
+	"$signatures": [
+		{
+			key: "...",
+			digest: "...",
+		}
+	]
+}
+```
+
+WARNING: Note that this will store the password to your keyfile in PLAIN TEXT in your .mizurc config file.
 
 ## Step 5: Using $ref
 
