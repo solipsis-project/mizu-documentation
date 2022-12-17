@@ -54,7 +54,7 @@ bafyreierxqzf7k7a7nhbfdoq2hs4fnbrytfjlj4namu7bakzt55hz4uylu
 bafyreibgpiqlk3y7xjbcse6ggm26zk7ovwqia5psmtqxp5gm4zohet3oua
 > echo '{ "author": "shakespeare", "content": "grass is green" }' | mizu publish
 bafyreifwkg6xtj52qioi7gs2bvxljfc4yynestkbgwswa5qkd5ifhhyiiy
-> echo 'SELECT ?content WHERE { ?message <author> "solipsis"; <content> ?content }' | mizu query
+> echo '{ "@select": "?content", "@where": { "@id": "?message", "author": "solipsis" } }' | mizu query
 [
   {
     "?content": "roses are red"
@@ -109,13 +109,34 @@ Also note the second `$` in the field `$$signatures` in the query. When a query 
 Why would a query get included in a message? So that it can be more easily shared.
 
 ```
-> echo '{ "@select": "?message", "@where": { "@id": "?message", "$$signatures": { "key": "bafzbeiaibfu7pu3k36mgbmymh5ae75hmn6jnmzo26x2pzis6zv7bxncge4" } } }' | mizu publish
+> echo '{
+    "@select": "?content", 
+    "@where": { 
+      "$$signatures": { 
+        "key": "z7ySHQR7YZJApfZRKds9hzzFypZo8s6WQyZqXCYVHRjug84TSqhdKFY31iMwB8k3KiNjhdbUjEABSL7VsC3Pn17MMDSqkQsC5wTCTkHhiHaD5FyWAYhnpKMjgLDJMPxVgUg69KkbjMyWgEVi9UqPYbamzfdSCZ6cpgDSr5iEBvhk3uHq6GbhAAoFMfBwdW2BBS2hr43SRafYDTY15hCsKD1DLSDuBnLNqwNi1yHv7Nr83S1dqPsPCG34LUVcADDSzshHa6XHS2TWNnmxGhgPMgiCFWvzW19nnHN9D2sFjskxXiDxiDTEcF8pNZsupxSGLw93gsJATZpNVSRBCQkeXVfyPm1kVKDPLbADA5dujRRWMbsQreZEd5y8kChjAeZzCWwfFCY7YeLeNapmVhTfAxiye"
+      } 
+    } 
+  }' | mizu publish
 bafyreidjms562ffchpdjwb4y6yyzojwll2mkcckvy6aemreg3smqotgh3i
-> curl 'https://mizu.stream/message/bafyreidjms562ffchpdjwb4y6yyzojwll2mkcckvy6aemreg3smqotgh3i'
-'{ "@select": "?message", "@where": { "@id": "?message", "$$signatures": { "key": "bafzbeiaibfu7pu3k36mgbmymh5ae75hmn6jnmzo26x2pzis6zv7bxncge4" } } }'
+> mizu view-raw bafyreidjms562ffchpdjwb4y6yyzojwll2mkcckvy6aemreg3smqotgh3i
+{
+	"@select": "?content",
+	"@where": { 
+		"@id": "?message", 
+		"$$signatures": {
+			"key": "z7ySHQR7YZJApfZRKds9hzzFypZo8s6WQyZqXCYVHRjug84TSqhdKFY31iMwB8k3KiNjhdbUjEABSL7VsC3Pn17MMDSqkQsC5wTCTkHhiHaD5FyWAYhnpKMjgLDJMPxVgUg69KkbjMyWgEVi9UqPYbamzfdSCZ6cpgDSr5iEBvhk3uHq6GbhAAoFMfBwdW2BBS2hr43SRafYDTY15hCsKD1DLSDuBnLNqwNi1yHv7Nr83S1dqPsPCG34LUVcADDSzshHa6XHS2TWNnmxGhgPMgiCFWvzW19nnHN9D2sFjskxXiDxiDTEcF8pNZsupxSGLw93gsJATZpNVSRBCQkeXVfyPm1kVKDPLbADA5dujRRWMbsQreZEd5y8kChjAeZzCWwfFCY7YeLeNapmVhTfAxiye"
+		}
+	}
+}
+> mizu query bafyreidjms562ffchpdjwb4y6yyzojwll2mkcckvy6aemreg3smqotgh3i
+[
+	{'?content':  'roses are red'},
+]
+```
+
 > curl 'https://mizu.stream/query/bafyreidjms562ffchpdjwb4y6yyzojwll2mkcckvy6aemreg3smqotgh3i'
 [
-	{'?message':  'https://mizu.stream/message/bafyreigbi3qsut4smii736l6oq66ktaxlc3fuh2fesiyn7whi7kbiyjl44'},
+	{'?content':  'roses are red'},
 ]
 ```
 
