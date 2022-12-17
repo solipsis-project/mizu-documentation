@@ -134,6 +134,21 @@ bafyreidjms562ffchpdjwb4y6yyzojwll2mkcckvy6aemreg3smqotgh3i
 ]
 ```
 
+<div class="notyet">
+
+Once the Gateway server is implemented, you will be able to access both the raw message and the query results via URL:
+
+```
+> curl 'https://mizu.stream/view-raw/bafyreidjms562ffchpdjwb4y6yyzojwll2mkcckvy6aemreg3smqotgh3i'
+{
+	"@select": "?content",
+	"@where": { 
+		"@id": "?message", 
+		"$$signatures": {
+			"key": "z7ySHQR7YZJApfZRKds9hzzFypZo8s6WQyZqXCYVHRjug84TSqhdKFY31iMwB8k3KiNjhdbUjEABSL7VsC3Pn17MMDSqkQsC5wTCTkHhiHaD5FyWAYhnpKMjgLDJMPxVgUg69KkbjMyWgEVi9UqPYbamzfdSCZ6cpgDSr5iEBvhk3uHq6GbhAAoFMfBwdW2BBS2hr43SRafYDTY15hCsKD1DLSDuBnLNqwNi1yHv7Nr83S1dqPsPCG34LUVcADDSzshHa6XHS2TWNnmxGhgPMgiCFWvzW19nnHN9D2sFjskxXiDxiDTEcF8pNZsupxSGLw93gsJATZpNVSRBCQkeXVfyPm1kVKDPLbADA5dujRRWMbsQreZEd5y8kChjAeZzCWwfFCY7YeLeNapmVhTfAxiye"
+		}
+	}
+}
 > curl 'https://mizu.stream/query/bafyreidjms562ffchpdjwb4y6yyzojwll2mkcckvy6aemreg3smqotgh3i'
 [
 	{'?content':  'roses are red'},
@@ -147,6 +162,8 @@ But unlike RSS, which assumes that the feeds have a specific structure and shoul
 We call a message that contains both queries and markup language for rendering those queries, a Stream.
 
 Streams are described in more detail in the [Streams Tutorial](./streams_tutorial).
+
+</div>
 
 ## Step 4: Creating your own key, and auto-signing
 
