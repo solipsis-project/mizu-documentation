@@ -12,6 +12,12 @@ The purpose of this document is to explain how Mizu is used and how it can be us
 
 Each step contains multiple examples using the Mizu command line interface, demonstrating the concepts introduced in that section. You can follow along on your machine. We encourage you to make sure you understand the behavior in each section before moving on to the next one.
 
+<div class="notyet">
+
+Some of the examples describe behavior that is not yet implemented. Those examples are in red boxes like this one. They should be treated as an informal specification of how Mizu will behave once complete, but it is not currently possible to replicate the behavior of these examples.
+
+</div>
+
 ## Step 1: Publishing a message
 
 All data in Mizu is stored in a distributed triplestore database. That is, you can think of the entire database as a set of object-key-value triples. All transactions on Mizu involve adding records to this database, and adding records is accomplished by publishing messages.
@@ -212,6 +218,8 @@ If you'd rather not have to pass this extra argument to every call to `mizu publ
 ```
 
 WARNING: Note that this will store the password to your keyfile in PLAIN TEXT in your .mizurc config file.
+
+<div class="notyet" >
 
 ## Step 5: Using $ref
 
@@ -461,4 +469,6 @@ And then we can run the query by providing a value for "author_param".
 
 (Alternatively, we could run the query with the command `mizu query $Template --param=author_param=hunter2`.)
 
-# TODO: Extend this tutorial.
+# More to come!
+
+</div>
