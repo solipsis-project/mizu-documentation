@@ -32,13 +32,17 @@ We can use Mizu's command line interface for publishing messages, which takes a 
 bafyreihedihs5xnwh52scar3h2irbzvb5cqjjsf4axjhcbntqowjlhthya
 ```
 
-If you want to view a message that's already been published to the database, you can do that via the `mizu view` command.
+If you want to view a message that's already been published to the database, you can do that via the `mizu view-raw` command.
 
-`mizu view message $HelloWorld`
+[test]: # (publishSimple)
+```
+> `mizu view-raw $HelloWorld`
+bafyreihedihs5xnwh52scar3h2irbzvb5cqjjsf4axjhcbntqowjlhthya
+```
 
-`mizu view message` will print the original contents of a message to stdout.
+`mizu view-raw message` will print the original contents of a message to stdout.
 
-(Once the HTTP gateway is live, you will also be able to view the message contents by sending a request to `https://mizu.stream/message/$HelloWorld`, which will return the original message as an HTTP response.)
+(Once the HTTP gateway is live, you will also be able to view the message contents by sending a request to `https://mizu.stream/view-raw/$HelloWorld`, which will return the original message as an HTTP response.)
 
 So far, this isn't doing anything that couldn't be done with IPFS alone. To truly leverage the benefits of Mizu, we need to learn about queries.
 
