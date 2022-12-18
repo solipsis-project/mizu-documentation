@@ -6,6 +6,13 @@ summary: An high-level of important concepts in Mizu
 
 # Core Concepts
 
+<div class="notyet">
+
+Some of the examples describe behavior that is not yet implemented. Those examples are in red boxes like this one. They should be treated as an informal specification of how Mizu will behave once complete.
+
+</div>
+
+
 ## Mizu URIs
 
 A Mizu URI is made up of an action, and some content-addressed data that the action uses. If the action has additional parameters, then those are included as URI query parameters. The format of a mizu URI is:
@@ -56,15 +63,23 @@ The most common reserved field is `$signatures`, which contains one of more key-
 
 For the full list of reserved fields and their meanings, see [Reserved Fields](./reserved_fields)
 
+<div class="notyet">
+
 ## Streams
 
 If all we're doing is publishing structured data to a distributed hash table, we don't need Mizu. We can already do all that and more with just IPFS.
 
 What Mizu lets us do is run queries on that data, and present that data in a structured way, called Streams.
 
-A stream is really nothing more than a packaged set of queries into the database, alongside metadata (like links to images, stylesheets, and other resources). This makes it extremely flexible.
+A stream is really nothing more than a packaged set of queries into the database, alongside metadata (like links to images, stylesheets, and other resources) that tell a Mizu client how to render the reesults of a query. This makes it extremely flexible.
 
-The simplest stream is represented by just a single user (a public key), which means that only messages signed by the person with the corresponding private key belong in the stream. But more complicated streams are possible, such as:
+The simplest stream contains messaged published by just a single user: only messages signed by the person with the corresponding private key appear in the stream. But more complicated streams are possible, such as:
+
+- A group of users, any of which can add stream content.
+- A group of users that can add stream content, and a single moderator that can edit or redact stream content.
+- A stream that combines multuple other streams
+- A stream that applies a filter on another stream.
+- A stream whose metadata describes an interface where users can publish their own messages that are included in the stream.
 
 A stream is added just like any other piece of data in the system, by publishing a message to the network:
 
@@ -103,4 +118,4 @@ When subscribing to a stream that has a redaction filter, you're prompted to cho
 - Unpin
 - Do nothing
   
-
+</div>
