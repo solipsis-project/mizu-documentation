@@ -37,7 +37,7 @@ If you want to view a message that's already been published to the database, you
 [test]: # (publishSimple)
 ```
 > mizu view-raw $HelloWorld
-bafyreihedihs5xnwh52scar3h2irbzvb5cqjjsf4axjhcbntqowjlhthya
+{ text: 'Hello, world!' }
 ```
 
 `mizu view-raw message` will print the original contents of a message to stdout.
@@ -68,7 +68,7 @@ bafyreierxqzf7k7a7nhbfdoq2hs4fnbrytfjlj4namu7bakzt55hz4uylu
 bafyreibgpiqlk3y7xjbcse6ggm26zk7ovwqia5psmtqxp5gm4zohet3oua
 > echo '{ "author": "shakespeare", "content": "grass is green" }' | mizu publish
 bafyreifwkg6xtj52qioi7gs2bvxljfc4yynestkbgwswa5qkd5ifhhyiiy
-> echo '{ "@select": "?content", "@where": { "@id": "?message", "author": "solipsis" } }' | mizu query
+> echo '{ "@select": "?content", "@where": { "author": "solipsis", "content": "?content" } }' | mizu query
 [
   {
     "?content": "roses are red"
@@ -123,26 +123,27 @@ Also note the second `$` in the field `$$signatures` in the query. When a query 
 Why would a query get included in a message? So that it can be more easily shared.
 
 ```
-> echo '{
+> $Query = echo '{
     "@select": "?content", 
     "@where": { 
       "$$signatures": { 
         "key": "z7ySHQR7YZJApfZRKds9hzzFypZo8s6WQyZqXCYVHRjug84TSqhdKFY31iMwB8k3KiNjhdbUjEABSL7VsC3Pn17MMDSqkQsC5wTCTkHhiHaD5FyWAYhnpKMjgLDJMPxVgUg69KkbjMyWgEVi9UqPYbamzfdSCZ6cpgDSr5iEBvhk3uHq6GbhAAoFMfBwdW2BBS2hr43SRafYDTY15hCsKD1DLSDuBnLNqwNi1yHv7Nr83S1dqPsPCG34LUVcADDSzshHa6XHS2TWNnmxGhgPMgiCFWvzW19nnHN9D2sFjskxXiDxiDTEcF8pNZsupxSGLw93gsJATZpNVSRBCQkeXVfyPm1kVKDPLbADA5dujRRWMbsQreZEd5y8kChjAeZzCWwfFCY7YeLeNapmVhTfAxiye"
-      } 
+      },
+	  "content": "?content"
     } 
   }' | mizu publish
-bafyreidjms562ffchpdjwb4y6yyzojwll2mkcckvy6aemreg3smqotgh3i
-> mizu view-raw bafyreidjms562ffchpdjwb4y6yyzojwll2mkcckvy6aemreg3smqotgh3i
+bafyreiedmnybcqjfy3b2eoucyfubsie523dtnrzs3lglgehsxsohkaz7qy
+> mizu view-raw $Query
 {
 	"@select": "?content",
 	"@where": { 
-		"@id": "?message", 
 		"$$signatures": {
 			"key": "z7ySHQR7YZJApfZRKds9hzzFypZo8s6WQyZqXCYVHRjug84TSqhdKFY31iMwB8k3KiNjhdbUjEABSL7VsC3Pn17MMDSqkQsC5wTCTkHhiHaD5FyWAYhnpKMjgLDJMPxVgUg69KkbjMyWgEVi9UqPYbamzfdSCZ6cpgDSr5iEBvhk3uHq6GbhAAoFMfBwdW2BBS2hr43SRafYDTY15hCsKD1DLSDuBnLNqwNi1yHv7Nr83S1dqPsPCG34LUVcADDSzshHa6XHS2TWNnmxGhgPMgiCFWvzW19nnHN9D2sFjskxXiDxiDTEcF8pNZsupxSGLw93gsJATZpNVSRBCQkeXVfyPm1kVKDPLbADA5dujRRWMbsQreZEd5y8kChjAeZzCWwfFCY7YeLeNapmVhTfAxiye"
-		}
+		},
+		"content": "?content"
 	}
 }
-> mizu query bafyreidjms562ffchpdjwb4y6yyzojwll2mkcckvy6aemreg3smqotgh3i
+> mizu query --cid $Query
 [
 	{'?content':  'roses are red'},
 ]
