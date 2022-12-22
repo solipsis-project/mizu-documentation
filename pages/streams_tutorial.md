@@ -1,6 +1,6 @@
 ---
 title: "Streams Tutorial"
-permalink: streams.html
+permalink: streams_tutorial.html
 summary: "The specification for Streams: apps built on Mizu."
 ---
 
