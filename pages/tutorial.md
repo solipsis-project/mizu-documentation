@@ -37,7 +37,9 @@ If you want to view a message that's already been published to the database, you
 [test]: # (publishSimple)
 ```
 > mizu view-raw $HelloWorld
-{ text: 'Hello, world!' }
+{
+  "text": "Hello, world!"
+}
 ```
 
 `mizu view-raw message` will print the original contents of a message to stdout.
@@ -112,7 +114,9 @@ Now if we run a query similar to the one above, we'll only get a single result, 
 ```
 > echo '{ "@select": "?content", "@where": { "@id": "?message", "content": "?content", "$$signatures": { "key": "z7ySHQR7YZJApfZRKds9hzzFypZo8s6WQyZqXCYVHRjug84TSqhdKFY31iMwB8k3KiNjhdbUjEABSL7VsC3Pn17MMDSqkQsC5wTCTkHhiHaD5FyWAYhnpKMjgLDJMPxVgUg69KkbjMyWgEVi9UqPYbamzfdSCZ6cpgDSr5iEBvhk3uHq6GbhAAoFMfBwdW2BBS2hr43SRafYDTY15hCsKD1DLSDuBnLNqwNi1yHv7Nr83S1dqPsPCG34LUVcADDSzshHa6XHS2TWNnmxGhgPMgiCFWvzW19nnHN9D2sFjskxXiDxiDTEcF8pNZsupxSGLw93gsJATZpNVSRBCQkeXVfyPm1kVKDPLbADA5dujRRWMbsQreZEd5y8kChjAeZzCWwfFCY7YeLeNapmVhTfAxiye" } } }' | mizu query
 [
-	{'?content':  'roses are red'},
+  {
+    "?content": "roses are red"
+  }
 ]
 ```
 
@@ -145,7 +149,9 @@ bafyreiedmnybcqjfy3b2eoucyfubsie523dtnrzs3lglgehsxsohkaz7qy
 }
 > mizu query --cid $Query
 [
-	{'?content':  'roses are red'},
+  {
+    "?content": "roses are red"
+  }
 ]
 ```
 
@@ -166,7 +172,9 @@ Once the Gateway server is implemented, you will be able to access both the raw 
 }
 > curl 'https://mizu.stream/query/bafyreidjms562ffchpdjwb4y6yyzojwll2mkcckvy6aemreg3smqotgh3i'
 [
-	{'?content':  'roses are red'},
+  {
+    "?content": "roses are red"
+  }
 ]
 ```
 
