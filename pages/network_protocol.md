@@ -4,7 +4,11 @@ permalink: network_protocol.html
 summary: A specification of how a Mizu node can receive updates from other nodes in the network.
 ---
 
+(For more of the intent behind the design, and an gentler introduction to Merkle/Prolly trees, check out [my blog post on the topic](https://www.solipsis-project.com/mizu-network-primer/))
+
 An application built on Mizu must define a set of **topics** that network users can query for updates on. For instance, in a blog application, this might include a topic for each author, listing that author’s posts, and a topic for each tag, including posts that contain that tag. Topics take the form of simple SPARQL queries.
+
+Each node maintains a [Prolly Tree](https://docs.dolthub.com/architecture/storage-engine/prolly-tree) for each topic it's tracking, containing all of the records pertaining to that topic. By comparing Prolly Trees starting from the root, nodes are able to quickly and efficiently compute which records that they are missing and need to request from their peers.
 
 If the user wants to make a more specific query, the client needs to choose a topic query that may be overbroad, and then do additional filtering on the results.
 
