@@ -59,7 +59,7 @@ The core unit of Mizu is the message. A message is simply a piece of structured 
 
 Some message fields start with a $. These are reserved fields, and each one has special semantics, either purely for message validation, or for one or more Mizu actions. Reserved fields are validated when a message is published or when received by a node: thus, all published messages can be assumed to obey certain constraints specified in this document. Names starting with a $ that are not listed here are reserved for later use and cannot be used in messages: clients must reject messages containing any such fields.
 
-The most common reserved field is `$signatures`, which contains one of more key-digest pairs that sign the rest of the object. If any of the signatures don't correctly sign the object, then the message containing the object is invalid and will not be accepted by nodes in the network.
+The most common reserved field is `$signatures`, which contains one or more key-digest pairs that sign the rest of the object. If any of the signatures don't correctly sign the object, then the message containing the object is invalid and will not be accepted by nodes in the network.
 
 For the full list of reserved fields and their meanings, see [Reserved Fields](./reserved_fields)
 
