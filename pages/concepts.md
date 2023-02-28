@@ -71,9 +71,9 @@ If all we're doing is publishing structured data to a distributed hash table, we
 
 What Mizu lets us do is run queries on that data, and present that data in a structured way, called Streams.
 
-A stream is really nothing more than a packaged set of queries into the database, alongside metadata (like links to images, stylesheets, and other resources) that tell a Mizu client how to render the reesults of a query. This makes it extremely flexible.
+A stream is really nothing more than a packaged set of queries into the database, alongside metadata (like links to images, stylesheets, and other resources) that tell a Mizu client how to render the results of a query. This makes it extremely flexible.
 
-The simplest stream contains messaged published by just a single user: only messages signed by the person with the corresponding private key appear in the stream. But more complicated streams are possible, such as:
+The simplest stream contains messages published by just a single user: only messages signed by the person with the corresponding private key appear in the stream. But more complicated streams are possible, such as:
 
 - A group of users, any of which can add stream content.
 - A group of users that can add stream content, and a single moderator that can edit or redact stream content.
