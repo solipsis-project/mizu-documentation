@@ -25,6 +25,9 @@ entries:
     - title: Data Model
       url: /data_model.html
       output: web
+    - title: Network Protocol
+      url: /network_protocol.html
+      output: web
     - title: Query Syntax
       url: /query_syntax.html
       output:

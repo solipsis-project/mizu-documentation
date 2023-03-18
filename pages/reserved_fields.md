@@ -26,7 +26,7 @@ The linked schema itself declares what *kind* of schema it is. If the node does 
 
 ### $ref
 
-Used for including a reference to pointer to another piece of Mizu data. The value of `$ref` must be a static Mizu URI, and the object containing the `$ref` field must have no other fields.
+Used for including a reference to another piece of Mizu data. The value of `$ref` must be a static Mizu URI, and the object containing the `$ref` field must have no other fields.
 
 ### $include
 
