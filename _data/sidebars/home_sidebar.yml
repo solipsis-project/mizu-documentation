@@ -40,7 +40,7 @@ entries:
       output: web
     - title: Streams
       url: /streams_tutorial.html
-      output:
+      output: web
     - title: Creating an Image Gallery
       url: /image_gallery_example.html
       output: web
